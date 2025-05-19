@@ -1,13 +1,88 @@
-export const mockChildren = [
+
+import { Child, Notification, Parent, Transaction, SavingsGoal, FixedDeposit, Reward, MonthlyReport } from "./types";
+
+export const mockChildren: Child[] = [
   {
     id: "c1",
     name: "Arjun Kumar",
     balance: 12500,
+    transactions: mockTransactions.filter(t => t.recipient === "Arjun Kumar" || t.id.startsWith("t")),
+    savingsGoals: [
+      {
+        id: "sg1",
+        name: "New Bicycle",
+        targetAmount: 8000,
+        currentAmount: 5000,
+        deadline: "2023-08-30"
+      },
+      {
+        id: "sg2",
+        name: "Video Game",
+        targetAmount: 4000,
+        currentAmount: 2500,
+        deadline: "2023-07-15"
+      }
+    ],
+    fixedDeposits: [
+      {
+        id: "fd1",
+        amount: 5000,
+        term: 6,
+        interestRate: 5.5,
+        startDate: "2023-01-15",
+        maturityDate: "2023-07-15"
+      }
+    ],
+    rewards: [
+      {
+        id: "r1",
+        name: "Smart Saver",
+        description: "Saved more than 50% of money received",
+        earnedDate: "2023-04-20",
+        type: "badge"
+      },
+      {
+        id: "r2",
+        name: "First Goal Achieved",
+        description: "Successfully completed first savings goal",
+        earnedDate: "2023-03-10",
+        type: "achievement"
+      }
+    ]
   },
   {
     id: "c2",
     name: "Diya Sharma",
     balance: 8900,
+    transactions: mockTransactions.filter(t => t.recipient === "Diya Sharma"),
+    savingsGoals: [
+      {
+        id: "sg3",
+        name: "School Trip",
+        targetAmount: 10000,
+        currentAmount: 7000,
+        deadline: "2023-09-10"
+      }
+    ],
+    fixedDeposits: [
+      {
+        id: "fd2",
+        amount: 3000,
+        term: 12,
+        interestRate: 6.0,
+        startDate: "2023-02-01",
+        maturityDate: "2024-02-01"
+      }
+    ],
+    rewards: [
+      {
+        id: "r3",
+        name: "Regular Saver",
+        description: "Saved consistently for 3 months",
+        earnedDate: "2023-05-01",
+        type: "badge"
+      }
+    ]
   },
 ];
 
@@ -98,7 +173,34 @@ export const mockNotifications = [
   },
 ];
 
-import { Child, Notification, Parent, Transaction } from "./types";
+export const mockMonthlyReports: Record<string, MonthlyReport> = {
+  "arjun-2023-05": {
+    month: "May",
+    year: 2023,
+    totalSpent: 2750,
+    totalSaved: 1250,
+    fdsCreated: 1,
+    goalsAchieved: 0,
+    rewardsEarned: 1,
+    transactions: mockTransactions.filter(t => 
+      t.date.startsWith("2023-05") && 
+      (t.recipient === "Arjun Kumar" || t.id.startsWith("t"))
+    )
+  },
+  "diya-2023-05": {
+    month: "May",
+    year: 2023,
+    totalSpent: 1200,
+    totalSaved: 800,
+    fdsCreated: 0,
+    goalsAchieved: 1,
+    rewardsEarned: 1,
+    transactions: mockTransactions.filter(t => 
+      t.date.startsWith("2023-05") && 
+      t.recipient === "Diya Sharma"
+    )
+  }
+};
 
 export const mockParents: Parent[] = [
   {

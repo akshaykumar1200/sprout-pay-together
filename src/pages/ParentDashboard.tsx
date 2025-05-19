@@ -9,6 +9,7 @@ import CreateFD from "@/components/ParentComponents/CreateFD";
 import ActivityApproval from "@/components/ParentComponents/ActivityApproval";
 import AllowanceRules from "@/components/ParentComponents/AllowanceRules";
 import NotificationCenter from "@/components/ParentComponents/NotificationCenter";
+import MonthlyReport from "@/components/ParentComponents/MonthlyReport";
 
 const ParentDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -38,6 +39,7 @@ const ParentDashboard = () => {
             {activeTab === "activity" && <ActivityApproval />}
             {activeTab === "allowance" && <AllowanceRules />}
             {activeTab === "notifications" && <NotificationCenter />}
+            {activeTab === "monthly-report" && <MonthlyReport user={user} />}
           </div>
         </div>
       </div>
