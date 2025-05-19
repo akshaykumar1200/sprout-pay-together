@@ -8,7 +8,7 @@ import {
   Repeat, 
   User, 
   ArrowRight, 
-  FileChartBar 
+  ChartBar 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Parent } from "@/lib/types";
@@ -47,7 +47,7 @@ const navItems = [
   },
   {
     title: "Monthly Report",
-    icon: <FileChartBar size={20} />,
+    icon: <ChartBar size={20} />,
     value: "monthly-report"
   },
   {

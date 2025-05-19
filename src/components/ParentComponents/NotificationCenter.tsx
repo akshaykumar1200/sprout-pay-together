@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bell, EyeOff, ArrowUpRight, CreditCard, Wallet } from "lucide-react";
-import { Notification, mockParents } from "@/lib/mockData";
+import { Notification } from "@/lib/types";
+import { mockParents } from "@/lib/mockData";
 
 const NotificationCenter: React.FC = () => {
   const { toast } = useToast();

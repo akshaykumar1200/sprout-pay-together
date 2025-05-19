@@ -1,6 +1,59 @@
 
 import { Child, Notification, Parent, Transaction, SavingsGoal, FixedDeposit, Reward, MonthlyReport } from "./types";
 
+// Define transactions first to avoid the "used before declaration" errors
+const mockTransactions: Transaction[] = [
+  {
+    id: "t1",
+    type: "allowance",
+    amount: 2000,
+    date: "2023-05-01",
+    recipient: "Arjun Kumar",
+  },
+  {
+    id: "t2",
+    type: "payment",
+    amount: 350,
+    date: "2023-05-03",
+    recipient: "Online Bookstore",
+  },
+  {
+    id: "t3",
+    type: "payment",
+    amount: 1200,
+    date: "2023-05-05",
+    recipient: "Gaming Platform",
+  },
+  {
+    id: "t4",
+    type: "transfer",
+    amount: 500,
+    date: "2023-05-07",
+    recipient: "Diya Sharma",
+  },
+  {
+    id: "t5",
+    type: "payment",
+    amount: 800,
+    date: "2023-05-10",
+    recipient: "Music Streaming Service",
+  },
+  {
+    id: "t6",
+    type: "allowance",
+    amount: 2000,
+    date: "2023-05-15",
+    recipient: "Arjun Kumar",
+  },
+  {
+    id: "t7",
+    type: "payment",
+    amount: 400,
+    date: "2023-05-17",
+    recipient: "Local Cafe",
+  },
+];
+
 export const mockChildren: Child[] = [
   {
     id: "c1",
@@ -86,59 +139,7 @@ export const mockChildren: Child[] = [
   },
 ];
 
-export const mockTransactions = [
-  {
-    id: "t1",
-    type: "allowance",
-    amount: 2000,
-    date: "2023-05-01",
-    recipient: "Arjun Kumar",
-  },
-  {
-    id: "t2",
-    type: "payment",
-    amount: 350,
-    date: "2023-05-03",
-    recipient: "Online Bookstore",
-  },
-  {
-    id: "t3",
-    type: "payment",
-    amount: 1200,
-    date: "2023-05-05",
-    recipient: "Gaming Platform",
-  },
-  {
-    id: "t4",
-    type: "transfer",
-    amount: 500,
-    date: "2023-05-07",
-    recipient: "Diya Sharma",
-  },
-  {
-    id: "t5",
-    type: "payment",
-    amount: 800,
-    date: "2023-05-10",
-    recipient: "Music Streaming Service",
-  },
-  {
-    id: "t6",
-    type: "allowance",
-    amount: 2000,
-    date: "2023-05-15",
-    recipient: "Arjun Kumar",
-  },
-  {
-    id: "t7",
-    type: "payment",
-    amount: 400,
-    date: "2023-05-17",
-    recipient: "Local Cafe",
-  },
-];
-
-export const mockNotifications = [
+export const mockNotifications: Notification[] = [
   {
     id: "n1",
     message: "Arjun spent ₹350 at Online Bookstore",
@@ -211,3 +212,16 @@ export const mockParents: Parent[] = [
     notifications: mockNotifications,
   },
 ];
+
+// Export the Transaction type to resolve import issues
+export { mockTransactions };
+
+// Helper functions to find users by email
+export const findParentByEmail = (email: string): Parent | undefined => {
+  return mockParents.find(parent => parent.email === email);
+};
+
+export const findChildByEmail = (email: string): Child | undefined => {
+  // Just for demonstration, in a real app, children would have email addresses
+  return mockChildren.find(child => child.name.toLowerCase().includes(email.split('@')[0].toLowerCase()));
+};

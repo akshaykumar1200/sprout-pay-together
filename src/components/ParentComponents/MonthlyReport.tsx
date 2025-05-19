@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -6,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts";
-import { FileChartBar } from "lucide-react";
+import { ChartBar } from "lucide-react";
 import { Parent, Child, MonthlyReport as MonthlyReportType } from "@/lib/types";
 import { mockMonthlyReports } from "@/lib/mockData";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -58,7 +57,7 @@ const MonthlyReport: React.FC<MonthlyReportProps> = ({ user }) => {
           </CardHeader>
           <CardContent>
             <div className="flex flex-col items-center justify-center py-8">
-              <FileChartBar className="w-16 h-16 text-muted-foreground mb-4" />
+              <ChartBar className="w-16 h-16 text-muted-foreground mb-4" />
               <p className="text-muted-foreground">
                 Reports are generated at the end of each month. Check back later!
               </p>
@@ -230,7 +229,7 @@ const MonthlyReport: React.FC<MonthlyReportProps> = ({ user }) => {
                 className="text-xs text-sprout-purple flex items-center hover:underline"
                 onClick={() => alert("Download functionality will be implemented soon!")}
               >
-                <FileChartBar className="h-4 w-4 mr-1" /> Download Report PDF
+                <ChartBar className="h-4 w-4 mr-1" /> Download Report PDF
               </button>
             </div>
           </CardContent>

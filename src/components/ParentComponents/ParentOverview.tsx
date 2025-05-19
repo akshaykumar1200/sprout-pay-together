@@ -1,7 +1,6 @@
-
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Parent } from "@/lib/mockData";
+import { Parent } from "@/lib/types";
 
 interface ParentOverviewProps {
   user: Parent;

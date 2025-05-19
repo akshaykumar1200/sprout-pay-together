@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
@@ -184,7 +183,7 @@ const ChildDashboard = () => {
                             <div>
                               <p className="text-sm font-medium">
                                 {transaction.type === "payment" ? "Payment to " : "Received from "}
-                                {transaction.recipient || transaction.sender}
+                                {transaction.recipient || "Unknown"}
                               </p>
                               <p className="text-xs text-muted-foreground">
                                 {new Date(transaction.date).toLocaleDateString()}
