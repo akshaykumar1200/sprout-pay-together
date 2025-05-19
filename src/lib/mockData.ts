@@ -1,189 +1,111 @@
-
-export interface ParentUser {
-  id: string;
-  name: string;
-  email: string;
-  children: ChildUser[];
-  notifications: Notification[];
-}
-
-export interface ChildUser {
-  id: string;
-  name: string;
-  email: string;
-  dob: string;
-  balance: number;
-  parentId?: string;
-  savingsGoals: SavingsGoal[];
-  transactions: Transaction[];
-  fixedDeposits: FixedDeposit[];
-}
-
-export interface SavingsGoal {
-  id: string;
-  name: string;
-  targetAmount: number;
-  currentAmount: number;
-  deadline?: string;
-}
-
-export interface Transaction {
-  id: string;
-  type: 'payment' | 'receive' | 'allowance';
-  amount: number;
-  recipient?: string;
-  sender?: string;
-  date: string;
-  status: 'pending' | 'completed' | 'rejected';
-  note?: string;
-}
-
-export interface FixedDeposit {
-  id: string;
-  amount: number;
-  interestRate: number;
-  startDate: string;
-  maturityDate: string;
-  status: 'active' | 'matured';
-}
-
-export interface Notification {
-  id: string;
-  type: 'spending' | 'low_balance' | 'approval_request';
-  childId: string;
-  childName: string;
-  message: string;
-  amount?: number;
-  date: string;
-  read: boolean;
-  actions: string[];
-}
-
-export const mockParents: ParentUser[] = [
+export const mockChildren = [
   {
-    id: 'p1',
-    name: 'Rajesh Kumar',
-    email: 'rajesh@example.com',
-    children: [],
-    notifications: [
-      {
-        id: 'n1',
-        type: 'spending',
-        childId: 'c1',
-        childName: 'Arjun Kumar',
-        message: '⚠️ Arjun just spent ₹2,350 via UPI.',
-        amount: 2350,
-        date: '2023-05-18T10:30:00',
-        read: false,
-        actions: ['Block UPI', 'View Transaction']
-      },
-      {
-        id: 'n2',
-        type: 'low_balance',
-        childId: 'c1',
-        childName: 'Arjun Kumar',
-        message: '💡 Arjun has only ₹1,785 remaining.',
-        amount: 1785,
-        date: '2023-05-18T14:45:00',
-        read: false,
-        actions: ['Top Up', 'Set Limit']
-      },
-      {
-        id: 'n3',
-        type: 'approval_request',
-        childId: 'c1',
-        childName: 'Arjun Kumar',
-        message: '🔔 Arjun wants to create a Fixed Deposit of ₹5,000.',
-        amount: 5000,
-        date: '2023-05-17T09:15:00',
-        read: true,
-        actions: ['Approve', 'Reject']
-      }
-    ]
-  }
+    id: "c1",
+    name: "Arjun Kumar",
+    balance: 12500,
+  },
+  {
+    id: "c2",
+    name: "Diya Sharma",
+    balance: 8900,
+  },
 ];
 
-export const mockChildren: ChildUser[] = [
+export const mockTransactions = [
   {
-    id: 'c1',
-    name: 'Arjun Kumar',
-    email: 'arjun@example.com',
-    dob: '2010-05-15',
-    balance: 1785,
-    parentId: 'p1',
-    savingsGoals: [
-      {
-        id: 'sg1',
-        name: 'New Bicycle',
-        targetAmount: 12000,
-        currentAmount: 4500,
-        deadline: '2023-08-30'
-      },
-      {
-        id: 'sg2',
-        name: 'Gaming Console',
-        targetAmount: 35000,
-        currentAmount: 8200,
-        deadline: '2023-12-25'
-      }
-    ],
-    transactions: [
-      {
-        id: 't1',
-        type: 'payment',
-        amount: 2350,
-        recipient: 'Book Store',
-        date: '2023-05-18T10:30:00',
-        status: 'completed',
-        note: 'School books'
-      },
-      {
-        id: 't2',
-        type: 'receive',
-        amount: 5000,
-        sender: 'Rajesh Kumar',
-        date: '2023-05-15T14:20:00',
-        status: 'completed',
-        note: 'Monthly allowance'
-      },
-      {
-        id: 't3',
-        type: 'payment',
-        amount: 850,
-        recipient: 'Food Court',
-        date: '2023-05-12T13:45:00',
-        status: 'completed',
-        note: 'Lunch with friends'
-      }
-    ],
-    fixedDeposits: [
-      {
-        id: 'fd1',
-        amount: 10000,
-        interestRate: 7.5,
-        startDate: '2023-01-10',
-        maturityDate: '2023-07-10',
-        status: 'active'
-      }
-    ]
-  }
+    id: "t1",
+    type: "allowance",
+    amount: 2000,
+    date: "2023-05-01",
+    recipient: "Arjun Kumar",
+  },
+  {
+    id: "t2",
+    type: "payment",
+    amount: 350,
+    date: "2023-05-03",
+    recipient: "Online Bookstore",
+  },
+  {
+    id: "t3",
+    type: "payment",
+    amount: 1200,
+    date: "2023-05-05",
+    recipient: "Gaming Platform",
+  },
+  {
+    id: "t4",
+    type: "transfer",
+    amount: 500,
+    date: "2023-05-07",
+    recipient: "Diya Sharma",
+  },
+  {
+    id: "t5",
+    type: "payment",
+    amount: 800,
+    date: "2023-05-10",
+    recipient: "Music Streaming Service",
+  },
+  {
+    id: "t6",
+    type: "allowance",
+    amount: 2000,
+    date: "2023-05-15",
+    recipient: "Arjun Kumar",
+  },
+  {
+    id: "t7",
+    type: "payment",
+    amount: 400,
+    date: "2023-05-17",
+    recipient: "Local Cafe",
+  },
 ];
 
-// Connect parents to children
-mockParents[0].children = mockChildren.filter(child => child.parentId === mockParents[0].id);
+export const mockNotifications = [
+  {
+    id: "n1",
+    message: "Arjun spent ₹350 at Online Bookstore",
+    date: "2023-05-03",
+    type: "spending",
+    read: false,
+    actions: ["View Details", "Dismiss"],
+  },
+  {
+    id: "n2",
+    message: "Diya's balance is low. Top up now?",
+    date: "2023-05-06",
+    type: "low_balance",
+    read: false,
+    actions: ["Top Up", "Ignore"],
+  },
+  {
+    id: "n3",
+    message: "Arjun received ₹500 from you",
+    date: "2023-05-07",
+    type: "transfer",
+    read: true,
+    actions: ["View Details"],
+  },
+  {
+    id: "n4",
+    message: "Payment of ₹800 to Music Streaming Service",
+    date: "2023-05-10",
+    type: "spending",
+    read: true,
+    actions: ["View Details"],
+  },
+];
 
-export const findParentByEmail = (email: string): ParentUser | undefined => {
-  return mockParents.find(parent => parent.email === email);
-};
+import { Child, Notification, Parent, Transaction } from "./types";
 
-export const findChildByEmail = (email: string): ChildUser | undefined => {
-  return mockChildren.find(child => child.email === email);
-};
-
-export const isParent = (user: ParentUser | ChildUser): user is ParentUser => {
-  return 'children' in user;
-};
-
-export const isChild = (user: ParentUser | ChildUser): user is ChildUser => {
-  return 'balance' in user;
-};
+export const mockParents: Parent[] = [
+  {
+    id: "p1",
+    name: "Rohan Kumar",
+    email: "rohan.kumar@example.com",
+    children: mockChildren,
+    notifications: mockNotifications,
+  },
+];
