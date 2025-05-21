@@ -19,21 +19,33 @@ const SignupForm: React.FC<SignupFormProps> = ({ role }) => {
     confirmPassword: "",
     dob: "",
   });
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setError(null); // Clear error when user types
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     
     if (formData.password !== formData.confirmPassword) {
-      // This will be handled by the context now
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters");
       return;
     }
     
-    await signUp(formData.email, formData.password, formData.name, role);
+    try {
+      await signUp(formData.email, formData.password, formData.name, role);
+    } catch (err: any) {
+      setError(err.message || "Failed to sign up. Please try again.");
+    }
   };
 
   return (
@@ -121,6 +133,10 @@ const SignupForm: React.FC<SignupFormProps> = ({ role }) => {
             className="input-field"
           />
         </div>
+      )}
+
+      {error && (
+        <div className="text-red-500 text-sm mt-2">{error}</div>
       )}
 
       <Button type="submit" className="w-full btn-primary mt-6" disabled={loading}>

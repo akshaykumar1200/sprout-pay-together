@@ -90,6 +90,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         description: error.message || "An error occurred during login",
         variant: "destructive",
       });
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -132,6 +133,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         description: error.message || "An error occurred during registration",
         variant: "destructive",
       });
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -158,6 +160,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         description: error.message || "An error occurred during logout",
         variant: "destructive",
       });
+      throw error;
     } finally {
       setLoading(false);
     }

@@ -16,15 +16,23 @@ const LoginForm: React.FC<LoginFormProps> = ({ role }) => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setError(null); // Clear error when user types
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn(formData.email, formData.password);
+    setError(null);
+    
+    try {
+      await signIn(formData.email, formData.password);
+    } catch (err: any) {
+      setError(err.message || "Login failed. Please check your credentials and try again.");
+    }
   };
 
   return (
@@ -62,6 +70,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ role }) => {
           className="input-field"
         />
       </div>
+
+      {error && (
+        <div className="text-red-500 text-sm mt-2">{error}</div>
+      )}
 
       <Button type="submit" className="w-full btn-primary mt-6" disabled={loading}>
         {loading ? "Signing In..." : "Sign In"}
