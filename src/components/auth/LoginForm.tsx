@@ -1,20 +1,17 @@
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { findChildByEmail, findParentByEmail } from "@/lib/mockData";
 import { ArrowRight, Mail, Lock } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface LoginFormProps {
   role: "parent" | "child";
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ role }) => {
-  const navigate = useNavigate();
-  const { toast } = useToast();
+  const { signIn, loading } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,34 +22,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ role }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Login logic
-    let user;
-    if (role === "parent") {
-      user = findParentByEmail(formData.email);
-    } else {
-      user = findChildByEmail(formData.email);
-    }
-    
-    if (user) {
-      // Mock successful login - in a real app we would verify password
-      toast({
-        title: "Login successful!",
-        description: "Welcome back!",
-      });
-      
-      setTimeout(() => {
-        navigate(role === "parent" ? "/parent-dashboard" : "/child-dashboard");
-      }, 1000);
-    } else {
-      toast({
-        title: "Login failed",
-        description: "Invalid email or password",
-        variant: "destructive",
-      });
-    }
+    await signIn(formData.email, formData.password);
   };
 
   return (
@@ -91,9 +63,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ role }) => {
         />
       </div>
 
-      <Button type="submit" className="w-full btn-primary mt-6">
-        Sign In
-        <ArrowRight className="ml-2 h-4 w-4" />
+      <Button type="submit" className="w-full btn-primary mt-6" disabled={loading}>
+        {loading ? "Signing In..." : "Sign In"}
+        {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
       </Button>
     </form>
   );

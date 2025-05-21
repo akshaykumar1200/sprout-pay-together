@@ -1,19 +1,17 @@
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowRight, Mail, Lock, Calendar, User } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface SignupFormProps {
   role: "parent" | "child";
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ role }) => {
-  const navigate = useNavigate();
-  const { toast } = useToast();
+  const { signUp, loading } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,27 +25,15 @@ const SignupForm: React.FC<SignupFormProps> = ({ role }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (formData.password !== formData.confirmPassword) {
-      toast({
-        title: "Passwords don't match",
-        description: "Please make sure your passwords match",
-        variant: "destructive",
-      });
+      // This will be handled by the context now
       return;
     }
     
-    // Mock signup - in a real app we would call an API
-    toast({
-      title: "Account created!",
-      description: "Welcome to Sprout Pay Together!",
-    });
-    
-    setTimeout(() => {
-      navigate(role === "parent" ? "/parent-dashboard" : "/child-dashboard");
-    }, 1000);
+    await signUp(formData.email, formData.password, formData.name, role);
   };
 
   return (
@@ -137,9 +123,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ role }) => {
         </div>
       )}
 
-      <Button type="submit" className="w-full btn-primary mt-6">
-        Create Account
-        <ArrowRight className="ml-2 h-4 w-4" />
+      <Button type="submit" className="w-full btn-primary mt-6" disabled={loading}>
+        {loading ? "Creating Account..." : "Create Account"}
+        {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
       </Button>
     </form>
   );
